@@ -18,6 +18,9 @@ public class SpringBootRedisCacheExampleApplicationTests {
   @Autowired
   private UserRepository userRepository;
 
+  @Autowired
+  private RedisTemplate<String, User> redisTemplate;
+
   @Test
   public void contextLoads() {
   }
@@ -28,6 +31,15 @@ public class SpringBootRedisCacheExampleApplicationTests {
     user.setName("name");
     user.setAddress("shanghai");
     userRepository.save(user);
+  }
+
+  @Test
+  public void testSave() {
+    User user = new User();
+    user.setId("200");
+    user.setName("name");
+    user.setAddress("shanghai");
+    redisTemplate.opsForValue().set(user.getId(), user);
   }
 
 }
