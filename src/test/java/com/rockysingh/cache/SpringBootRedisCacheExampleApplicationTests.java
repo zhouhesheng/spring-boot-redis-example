@@ -10,6 +10,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = SpringBootRedisCacheExampleApplication.class)
 @WebAppConfiguration
@@ -40,6 +43,16 @@ public class SpringBootRedisCacheExampleApplicationTests {
     user.setName("name");
     user.setAddress("shanghai");
     redisTemplate.opsForValue().set(user.getId(), user);
+  }
+
+  @Test
+  public void testPutAll() {
+    String key = "seckill";
+    Map<String, Integer> goods = new HashMap<>();
+    goods.put("totalCount", 100);
+    goods.put("initStatus", 1);
+    goods.put("seckillCount", 0);
+    redisTemplate.opsForHash().putAll(key, goods);
   }
 
 }
